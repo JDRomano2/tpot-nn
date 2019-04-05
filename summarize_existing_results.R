@@ -7,7 +7,7 @@ dnn <- read_delim('existing_performance/dnn_results.txt', delim = ' ')
 
 dbnn <- merge(dnn, dbn, by.x = 'dataset', by.y = 'Dataset') %>%
   mutate(ghasemi_dnn_r2 = round(DNN^2,3)) %>%
-  select(dataset, CD, PCD, FPCD, DNN, dnn_tuned, dnn_best, dnn_median, ghasemi_dnn_r2) %>%
+  select(dataset, ghasemi_dnn_r2, dnn_median, dnn_tuned, dnn_best, CD, PCD, FPCD, DNN) %>%
   rename(ma_dnn_tuned_r2 = dnn_tuned,
          ma_dnn_best_r2 = dnn_best,
          ma_dnn_median_r2 = dnn_median,
