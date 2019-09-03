@@ -5,7 +5,12 @@
 .DS_Store
 .ipynb_checkpoints/
 __pycache__/
+pipelines/__pycache__/
 
 # data
 qsar/
 qsar_npdr/
+
+subsets/
+papers/
+# check later

@@ -1,0 +1,14 @@
+#!/bin/bash
+#BSUB -J train_tpot_mlp_3layers_8jobs
+#BSUB -o /home/ttle/tpot_qsar/log/tpot_mlp_qsar.log
+#BSUB -e /home/ttle/tpot_qsar/log/tpot_mlp_qsar.err
+#BSUB -q moore_normal
+#BSUB -M 60000
+#BSUB -R "span[hosts=1]"
+#BSUB -n 8
+
+#export PATH="/home/ttle/anaconda/bin:$PATH"
+cd /home/ttle/tpot_qsar
+
+source activate datasetSelector
+python qsar-train-3-8.py
