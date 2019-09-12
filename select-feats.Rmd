@@ -12,11 +12,10 @@ set.seed(1618)
 ```
 
 ```{r}
+var_quant_thres <- 0.5
 datasets <- read_csv('qsar_datasets.txt', col_names = F) %>% pull()
-
 datasets <- datasets[7]
 ```
-
 
 ```{r}
 # dataset = datasets[1]
@@ -25,6 +24,12 @@ for (dataset in datasets){
     vroom() %>%
     dplyr::select(- MOLECULE) %>%
     data.frame()
+  
+  metab_feats <- dplyr::select(metab, - Act)
+  feat_sd <- apply(metab_feats, 2, sd)
+  selected_feats <- colnames(metab_feats)[feat_sd > 
+                                            quantile(feat_sd, var_quant_thres)]
+  metab_filtered <- dplyr::select(metab, Act, selected_feats)
   
   system.time(
     npdr.metab.results <-
@@ -42,7 +47,7 @@ for (dataset in datasets){
     dplyr::select('Act', npdr_feats) %>%
     write_csv(paste0('qsar_npdr/', dataset, '_training_npdr.csv'))
   
-  save(npdr.metab.results, file = paste0('results/', dataset, '_training_npdr.Rdata'))
+  save(npdr.metab.results, file = paste0('results/', dataset, '_train_thres_npdr.Rdata'))
 }
 
 ```
