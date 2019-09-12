@@ -71,15 +71,15 @@ personal_config['sklearn.neural_network.MLPRegressor'] = {
     'activation': ['logistic', 'tanh', 'relu'],
     'solver': ['lbfgs', 'sgd', 'adam'],
     'learning_rate': ['constant', 'invscaling', 'adaptive'],
-    'hidden_layer_sizes': [(512, 64, )],
+    'hidden_layer_sizes': [(256, 32, )],
     'alpha': [1e-3, 1e-2, 1e-1, 1., 10., 100.],
     'learning_rate_init': [1e-3, 1e-2, 1e-1, 0.5, 0.75, 0.9],
     'momentum': [0.1, 0.5, 0.75, 0.9]
 }
 #
-personal_config['sklearn.feature_selection.VarianceThreshold'] = {
-        'threshold': [0.0005]
-}
+# personal_config['sklearn.feature_selection.VarianceThreshold'] = {
+#         'threshold': [0.0005]
+# }
 
 # In[4]:
 
@@ -115,7 +115,7 @@ def build_tpot_structure(outcome = 'quant'):
                          random_state = random_state,
                          cv = TimeSeriesSplit(n_splits=5),
                          n_jobs = 1,
-                         template = 'VarianceThreshold-Selector-Transformer-MLPClassifier')
+                         template = 'Selector-Transformer-MLPClassifier')
     else: # quantitative trait
         tpot = TPOTRegressor(generations = n_gen,
                          population_size = n_pop,
@@ -125,7 +125,7 @@ def build_tpot_structure(outcome = 'quant'):
                          random_state = random_state,
                          cv = TimeSeriesSplit(n_splits=5),
                          n_jobs = 1,
-                         template = 'VarianceThreshold-Selector-Transformer-MLPRegressor')
+                         template = 'Selector-Transformer-MLPRegressor')
     return tpot
 
 def run_tpot(dat_name, outcome = 'quant'):
@@ -143,7 +143,7 @@ def run_tpot(dat_name, outcome = 'quant'):
     t_stop = process_time() # end timing
 
     print('Total elapsed process time:', t_stop - t_start, 'seconds')
-    write_pipes('pipelines/3layers_' + dat_name + '_' + str(random_state), tpot)
+    write_pipes('pipelines/2layers_' + dat_name + '_' + str(random_state), tpot)
     CV_score = tpot._optimized_pipeline_score
     delta_t = t_stop - t_start
 
