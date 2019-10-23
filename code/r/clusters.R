@@ -1,22 +1,7 @@
 library(cluster)    # clustering algorithms
 library(factoextra) # clustering algorithms & visualization
 library(tidyverse)
-# trainFile <- paste0('qsar/', split_names[10])
-# train <- read.csv(trainFile, header=TRUE, nrows=100)
-# # train <- read.csv(trainFile, header=TRUE, nrows=100)
-# boxplot(train[, 3:100])
-# vars <- apply(train[, 3:100], 2, var)
-# plot(vars)
-# str(train)
-# classes <- sapply(train, class);
-# train <- read.csv(trainFile, header=TRUE, colClasses=classes)
-# 
-# train2 <- read.csv(paste0('qsar/', split_names[12]), header=TRUE)
-# # train <- read.csv(trainFile, header=TRUE, nrows=100)
-# # boxplot(train2[, 3:100])
-# vars <- apply(train2[, 3:100], 2, var)
-# summary(vars)
-# # str(train2)                
+library(here)
 
 # function to compute average silhouette for k clusters
 avg_sil <- function(k, df) {
@@ -27,8 +12,10 @@ avg_sil <- function(k, df) {
 
 k.values <- 2:15
 
-mysets <- read.csv('qsar_datasets.txt', header = F)[,1]
-set = mysets[1]
+mysets <- here('code', 'qsar_datasets.txt') %>% 
+  read_csv(col_names = F) %>% 
+  pull(X1)
+
 # Nfiles = 15
 for (set in mysets ) {
   print(Nfiles)
@@ -52,6 +39,6 @@ for (set in mysets ) {
     summarise(Features = paste0(feature, collapse = ";")) %>%
     mutate(SubsetSize = count(grouping, Subset)$n)
   
-  write_csv(subset, file = paste0('subsets/sub', set, '.csv'))
+  write_csv(subset, file = here('code', 'subsets', paste0('sub', set, '.csv')))
   
 }

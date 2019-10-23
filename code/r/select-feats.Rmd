@@ -13,14 +13,15 @@ set.seed(1618)
 
 ```{r}
 var_quant_thres <- 0.5
-datasets <- read_csv('qsar_datasets.txt', col_names = F) %>% pull()
+datasets <- here::here('code', 'qsar_datasets.txt') %>% 
+  read_csv(col_names = F) %>% pull()
 datasets <- datasets[7]
 ```
 
 ```{r}
 # dataset = datasets[1]
 for (dataset in datasets){
-  metab <- paste0('qsar/', dataset, '_training_preprocessed.csv') %>%
+  metab <- here::here('code', 'qsar', paste0(dataset, '_training_preprocessed.csv')) %>%
     vroom() %>%
     dplyr::select(- MOLECULE) %>%
     data.frame()
@@ -47,7 +48,8 @@ for (dataset in datasets){
     dplyr::select('Act', npdr_feats) %>%
     write_csv(paste0('qsar_npdr/', dataset, '_training_npdr.csv'))
   
-  save(npdr.metab.results, file = paste0('results/', dataset, '_train_thres_npdr.Rdata'))
+  save(npdr.metab.results, 
+       file = here::here('code', 'results', paste0(dataset, '_train_thres_npdr.Rdata')))
 }
 
 ```
