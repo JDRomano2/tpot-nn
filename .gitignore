@@ -8,12 +8,12 @@ __pycache__/
 pipelines/__pycache__/
 
 # data
-qsar/*
-!qsar/METAB_training_preprocessed.csv
-!qsar/METAB_test_preprocessed.csv
+code/qsar/*
+!code/qsar/METAB_training_preprocessed.csv
+!code/qsar/METAB_test_preprocessed.csv
 
-qsar_npdr/*
-!qsar_npdr/METAB_training_npdr.csv
+code/qsar_npdr/*
+!code/qsar_npdr/METAB_training_npdr.csv
 
 subsets/
 papers/
