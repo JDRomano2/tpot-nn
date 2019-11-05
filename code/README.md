@@ -5,4 +5,6 @@ The METAB dataset example: code for training TPOT to predict the outcome of  is 
 - QSAR datasets (`.csv`) are located in the [`qsar`](qsar) folder.
 NPDR-filtered QSAR datasets are in [`qsar_npdr`](qsar_npdr) folder.
 
+- Datasets come from Merck Molecular Activity Kaggle challenge: https://www.kaggle.com/c/MerckActivity/data
+
 - [`subsets`](subsets) contain smaller QSAR datasets for testing purposes.
