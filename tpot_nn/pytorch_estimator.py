@@ -1,3 +1,5 @@
+from abc import abstractmethod
+
 import torch
 import torch.nn as nn
 from torch.autograd import Variable
@@ -9,7 +11,21 @@ from sklearn.model_selection import train_test_split
 from sklearn.datasets import make_classification
 
 
-class PytorchLogisticRegression(ClassifierMixin, nn.Module):
+class PytorchEstimator(ClassifierMixin, nn.Module):
+    @abstractmethod
+    def fit(self, X, y):
+        pass
+
+    @abstractmethod
+    def transform(self, X):
+        pass
+
+    def fit_transform(self, X, y):
+        self.fit(X, y)
+        return self.transform(X)
+
+
+class PytorchLogisticRegression(PytorchEstimator):
     """Logistic Regression classifier, implemented in PyTorch, for use with
     TPOT.
     """
@@ -45,13 +61,13 @@ class PytorchLogisticRegression(ClassifierMixin, nn.Module):
         train_dset = self.PytorchDataset(X_train, y_train)
         test_dset = self.PytorchDataset(X_test, y_test)
 
-        self.linear = nn.Linear(X.shape[1], y.shape[1])
+        self.linear = nn.Linear(X.shape[1], y_onehot.shape[1])
 
         train_loader = DataLoader(train_dset, batch_size=self.batch_size, shuffle=True, num_workers=2)
         test_loader = DataLoader(test_dset, batch_size=self.batch_size, shuffle=True, num_workers=2)
 
         criterion = nn.CrossEntropyLoss()
-        optimizer = torch.optim.SGD(self.parameters(), lr=learning_rate)
+        optimizer = torch.optim.SGD(self.parameters(), lr=self.learning_rate)
 
         # Train the model
         for epoch in range(self.num_epochs):
@@ -89,12 +105,8 @@ class PytorchLogisticRegression(ClassifierMixin, nn.Module):
     def transform(self, X):
         pass
 
-    def fit_transform(self, X, y):
-        self.fit(X, y)
-        return self.transform(X)
 
-
-class PytorchMLP(ClassifierMixin, nn.Module):
+class PytorchMLP(PytorchEstimator):
     """Multilayer Perceptron, implemented in PyTorch, for use with TPOT.
     """
     def __init__(self, num_epochs=5):
