@@ -2,16 +2,24 @@ from abc import abstractmethod
 
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch.autograd import Variable
-from torch.utils.data import DataLoader, Dataset
+from torch.utils.data import DataLoader, Dataset, TensorDataset
 
 from sklearn.base import ClassifierMixin
 from sklearn.preprocessing import OneHotEncoder
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import make_classification
 
+import ipdb
 
-class PytorchEstimator(ClassifierMixin, nn.Module):
+
+class PytorchEstimator(ClassifierMixin):
+    """Base class for Pytorch-based estimators (currently only classifiers) for
+    use in TPOT.
+
+    In the future, these will be merged into TPOT's main code base.
+    """
     @abstractmethod
     def fit(self, X, y):
         pass
@@ -23,6 +31,17 @@ class PytorchEstimator(ClassifierMixin, nn.Module):
     def fit_transform(self, X, y):
         self.fit(X, y)
         return self.transform(X)
+
+
+class LR(nn.Module):
+    def __init__(self, input_size, num_classes):
+        super(LR, self).__init__()
+        self.linear = nn.Linear(input_size, num_classes)
+
+    def forward(self, x):
+        #out = F.log_softmax(self.linear(x), dim=1)
+        out = self.linear(x)
+        return out
 
 
 class PytorchLogisticRegression(PytorchEstimator):
@@ -41,33 +60,44 @@ class PytorchLogisticRegression(PytorchEstimator):
         def __len__(self):
             return self.X.shape[0]
 
-    def __init__(self, penalty='l2', num_epochs=5, batch_size=8, learning_rate=0.001):
+    def __init__(self, penalty='l2', num_epochs=5, batch_size=8, learning_rate=0.001,
+                 num_classes=2):
         super().__init__()
         self.num_epochs = num_epochs
         self.batch_size = batch_size
         self.learning_rate = learning_rate
+        self.input_size = batch_size
+        self.num_classes = num_classes
 
     def fit(self, X, y):
         """Based on code from
         https://www.kaggle.com/negation/pytorch-logistic-regression-tutorial
         """
-        self.onehot = OneHotEncoder(handle_unknown='ignore', sparse=False)
-        y_onehot = self.onehot.fit_transform(y.reshape(-1,1))
 
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y_onehot, test_size=0.3
+            X, y, test_size=0.3
         )
 
-        train_dset = self.PytorchDataset(X_train, y_train)
-        test_dset = self.PytorchDataset(X_test, y_test)
+        input_size = X.shape[-1]
+        num_classes = len(set(y))
 
-        self.linear = nn.Linear(X.shape[1], y_onehot.shape[1])
+        X_train = torch.tensor(X_train, dtype=torch.float32)
+        X_test = torch.tensor(X_test, dtype=torch.float32)
+        y_train = torch.tensor(y_train, dtype=torch.int64)
+        y_test = torch.tensor(y_test, dtype=torch.int64)
+
+        train_dset = TensorDataset(X_train, y_train)
+        test_dset = TensorDataset(X_test, y_test)
 
         train_loader = DataLoader(train_dset, batch_size=self.batch_size, shuffle=True, num_workers=2)
         test_loader = DataLoader(test_dset, batch_size=self.batch_size, shuffle=True, num_workers=2)
 
+        #ipdb.set_trace()
+
+        model = LR(input_size, num_classes)
+
         criterion = nn.CrossEntropyLoss()
-        optimizer = torch.optim.SGD(self.parameters(), lr=self.learning_rate)
+        optimizer = torch.optim.SGD(model.parameters(), lr=self.learning_rate)
 
         # Train the model
         for epoch in range(self.num_epochs):
@@ -76,15 +106,17 @@ class PytorchLogisticRegression(PytorchEstimator):
                 labels = Variable(labels)
 
                 optimizer.zero_grad()
-
+                #ipdb.set_trace()
                 outputs = model(rows)
+
+
                 loss = criterion(outputs, labels)
                 loss.backward()
                 optimizer.step()
 
                 if (i+1) % 100 == 0:
                     print("Epoch: [%d/%d], Step: [%d/%d], Loss: %.4f"
-                          % (epoch+1, num_epochs, i+1, len(train_dataset)//batch_size, loss.data[0]))
+                          % (epoch+1, self.num_epochs, i+1, len(train_dset)//self.batch_size, loss.item()))
 
         # Evaluate trained model on the test set
         correct = 0
@@ -125,8 +157,8 @@ class PytorchMLP(PytorchEstimator):
 
 
 def main():
-    X, y = make_classification(n_features=2, n_redundant=0, n_informative=2,
-                               random_state=1, n_clusters_per_class=1)
+    X, y = make_classification(n_features=3, n_redundant=0, n_informative=2,
+                               n_clusters_per_class=1, n_samples=10000)
 
     lr = PytorchLogisticRegression()
     lr.fit(X, y)
