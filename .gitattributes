@@ -1,3 +1,5 @@
 code/qsar/METAB_test_preprocessed.csv filter=lfs diff=lfs merge=lfs -text
 code/qsar/METAB_training_preprocessed.csv filter=lfs diff=lfs merge=lfs -text
 code/qsar_npdr/METAB_training_npdr.csv filter=lfs diff=lfs merge=lfs -text
+code/pmlb-data/classification/*.csv filter=lfs diff=lfs merge=lfs -text
+code/pmlb-data/regression/*.csv filter=lfs diff=lfs merge=lfs -text
