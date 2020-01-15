@@ -9,8 +9,10 @@ from sklearn.datasets import load_breast_cancer
 
 
 tpot_config = {
-    'tpot.nn.PytorchLRClassifier': {
-        'learning_rate': [1e-3, 1e-2, 1e-1, 0.5, 1.]
+    'sklearn.linear_model.LogisticRegression': {
+        'penalty': ["l1", "l2"],
+        'C': [1e-4, 1e-3, 1e-2, 1e-1, 0.5, 1., 5., 10., 15., 20., 25.],
+        'dual': [True, False]
     }
 }
 
@@ -29,4 +31,4 @@ clf_t = TPOTClassifier(generations=5, population_size=50, verbosity=2, config_di
 
 clf_t.fit(X_train, y_train)
 print(clf_t.score(X_test, y_test))
-clf_t.export('tpot_nn_bc_pipeline.py')
+clf_t.export('tpot_sklearn_bc_pipeline.py')
