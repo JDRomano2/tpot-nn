@@ -77,8 +77,8 @@ class PytorchClassifier(BaseEstimator, ClassifierMixin):
         for epoch in range(self.num_epochs):
             for i, (samples, labels) in enumerate(self.data_loader):
                 #ipdb.set_trace()
-                samples = Variable(samples).to(self.device)
-                labels = Variable(labels).to(self.device)
+                samples.to(self.device)
+                labels = labels.to(self.device)
 
                 self.optimizer.zero_grad()
                 outputs = self.network(samples)
