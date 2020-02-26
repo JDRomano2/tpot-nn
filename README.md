@@ -1,13 +1,23 @@
+## Datasets
 
-## Repository structure 
 
-### Code
-- [`code`](code) contains all the python and R code that train TPOT and test recommended pipelines on the QSAR datasets.
+## Jobs
 
-### Literature review
-- [`existing_performance`](existing_performance) summarizes existing accuracies on the QSAR datasets of previous studies (see [`papers`](papers)).
+For each dataset, submit the following jobs with 5 replicates each:
 
-### Results
-- [`code/pipelines`](code/pipelines) and [`code/accuracies`](code/accuracies) save the preliminary results of running TPOT-MLP on the QSAR datasets.
-- [`code/predictions`](vpredictions) are predicted outcome on the testing set.
-- [`MLP_results`](MLP_results) summarizes the preliminary results.
+- tpot: LR
+- tpot: MLP
+- tpot: All modules enabled
+- tpot-nn: LR
+- tpot-nn: MLP
+- tpot-nn: All modules (including NN) enabled
+
+5 replicates on 6 TPOT pipelines for 4 datasets means 120 jobs need to be run.
+
+## Submitting
+
+To submit the entire array of jobs via LSF, use the following command in the repository root directory:
+
+```
+$ bsub -J "tpotNnArray[1:120]" < submit_job.sh
+```

@@ -3,5 +3,7 @@
 #BSUB -o tpot_nn_eval.%J.out
 #BSUB -e tpot_nn_eval.%J.error
 
-echo "this is a test"
+jobn=%I
+
+echo ${jobn}
 sleep 5
