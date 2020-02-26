@@ -18,3 +18,5 @@ code/qsar_npdr/*
 subsets/
 papers/
 # check later
+
+.vscode/
