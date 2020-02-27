@@ -20,3 +20,6 @@ papers/
 # check later
 
 .vscode/
+
+job_files/*
+pipelines/*

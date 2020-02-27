@@ -2,7 +2,7 @@ import time
 import os, sys
 
 dsets = [
-  'Hill_Valley_with_noise'
+  'Hill_Valley_with_noise',
   'breast-cancer-wisconsin',
   'spambase',
   'ionosphere'
@@ -26,15 +26,15 @@ for dset in dsets:
       jobname = jobname_template.format(dset, model, rep, str(time.time()))
 
       jobfile_path = 'job_files/{0}.sh'.format(jobname)
-      jobfile = open(jobname, 'w')
+      jobfile = open(jobfile_path, 'w')
       jobfile.writelines([
-        '#!/bin/bash',
-        '#BSUB -J {0}'.format(jobname),
-        '#BSUB -o logs/{0}.out'.format(jobname),
-        '#BSUB -e logs/{0}.err'.format(jobname),
-        '#BSUB -M 10000',
-        '',
-        '{0}'.format(py_cmd)
+        '#!/bin/bash\n',
+        '#BSUB -J {0}\n'.format(jobname),
+        '#BSUB -o logs/{0}.out\n'.format(jobname),
+        '#BSUB -e logs/{0}.err\n'.format(jobname),
+        '#BSUB -M 10000\n',
+        '\n',
+        '{0}\n'.format(py_cmd)
       ])
       jobfile.close()
 
