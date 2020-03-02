@@ -41,7 +41,7 @@ print(">> JOB START TIME:        {0:.2f}".format(time.time()))
 print(">> DATASET:              ", args.dataset)
 print(">> MODEL TEMPLATE:       ", args.model_template)
 
-X, y = fetch_data(args.dataset, return_X_y=True)
+X, y = fetch_data(args.dataset, return_X_y=True, local_cache_dir="pmlb_data_cache/")
 
 template = args.model_template
 t0, t1 = tuple(template.split('_'))
