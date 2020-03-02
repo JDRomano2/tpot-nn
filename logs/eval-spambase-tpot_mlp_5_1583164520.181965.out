@@ -1,0 +1,55 @@
+Sender: LSF System <jszostek@lambda28>
+Subject: Job 3816629: <eval-spambase-tpot_mlp_5_1583164520.181965> in cluster <PMACS-SCC> Exited
+
+Job <eval-spambase-tpot_mlp_5_1583164520.181965> was submitted from host <sarlacc> by user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:20 2020
+Job was executed on host(s) <lambda28>, in queue <epistasis_normal>, as user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:38 2020
+</home/jdr2160> was used as the home directory.
+</home/jdr2160/tpot-nn> was used as the working directory.
+Started at Mon Mar  2 10:55:38 2020
+Terminated at Mon Mar  2 10:55:40 2020
+Results reported at Mon Mar  2 10:55:40 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J eval-spambase-tpot_mlp_5_1583164520.181965
+#BSUB -o logs/eval-spambase-tpot_mlp_5_1583164520.181965.out
+#BSUB -e logs/eval-spambase-tpot_mlp_5_1583164520.181965.err
+#BSUB -M 10000
+
+python model_script.py --dataset=spambase --model_template=tpot_mlp
+
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   1.30 sec.
+    Max Memory :                                 92 MB
+    Average Memory :                             61.33 MB
+    Total Requested Memory :                     4096.00 MB
+    Delta Memory :                               4004.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                5
+    Run time :                                   5 sec.
+    Turnaround time :                            20 sec.
+
+The output (if any) follows:
+
+>> TRAINING TPOT NN EVALUATION MODEL
+>> JOB START TIME:        1583164540.20
+>> DATASET:               spambase
+>> MODEL TEMPLATE:        tpot_mlp
+>> TEMPLATE STRING:       Selector-Transformer-MLPClassifier
+>> BEGIN TRAINING AT:     1583164540.23
+Warning: xgboost.XGBClassifier is not available and will not be used by TPOT.
+
+
+PS:
+
+Read file <logs/eval-spambase-tpot_mlp_5_1583164520.181965.err> for stderr output of this job.
+

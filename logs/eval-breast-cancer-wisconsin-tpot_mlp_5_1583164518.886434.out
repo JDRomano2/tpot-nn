@@ -1,0 +1,55 @@
+Sender: LSF System <jszostek@lambda10>
+Subject: Job 3816599: <eval-breast-cancer-wisconsin-tpot_mlp_5_1583164518.886434> in cluster <PMACS-SCC> Exited
+
+Job <eval-breast-cancer-wisconsin-tpot_mlp_5_1583164518.886434> was submitted from host <sarlacc> by user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:18 2020
+Job was executed on host(s) <lambda10>, in queue <epistasis_normal>, as user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:28 2020
+</home/jdr2160> was used as the home directory.
+</home/jdr2160/tpot-nn> was used as the working directory.
+Started at Mon Mar  2 10:55:28 2020
+Terminated at Mon Mar  2 10:55:31 2020
+Results reported at Mon Mar  2 10:55:31 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J eval-breast-cancer-wisconsin-tpot_mlp_5_1583164518.886434
+#BSUB -o logs/eval-breast-cancer-wisconsin-tpot_mlp_5_1583164518.886434.out
+#BSUB -e logs/eval-breast-cancer-wisconsin-tpot_mlp_5_1583164518.886434.err
+#BSUB -M 10000
+
+python model_script.py --dataset=breast-cancer-wisconsin --model_template=tpot_mlp
+
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   1.27 sec.
+    Max Memory :                                 68 MB
+    Average Memory :                             68.00 MB
+    Total Requested Memory :                     4096.00 MB
+    Delta Memory :                               4028.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                5
+    Run time :                                   5 sec.
+    Turnaround time :                            13 sec.
+
+The output (if any) follows:
+
+>> TRAINING TPOT NN EVALUATION MODEL
+>> JOB START TIME:        1583164530.55
+>> DATASET:               breast-cancer-wisconsin
+>> MODEL TEMPLATE:        tpot_mlp
+>> TEMPLATE STRING:       Selector-Transformer-MLPClassifier
+>> BEGIN TRAINING AT:     1583164530.56
+Warning: xgboost.XGBClassifier is not available and will not be used by TPOT.
+
+
+PS:
+
+Read file <logs/eval-breast-cancer-wisconsin-tpot_mlp_5_1583164518.886434.err> for stderr output of this job.
+

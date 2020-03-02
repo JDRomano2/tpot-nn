@@ -1,0 +1,19 @@
+Traceback (most recent call last):
+  File "/home/jdr2160/python-3.7_tpot-nn/lib/python3.7/site-packages/tpot/base.py", line 433, in _add_operators
+    operator = next(op for op in self.operators if op.__name__ == step)
+StopIteration
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "model_script.py", line 82, in <module>
+    clf_t.fit(X_train, y_train)
+  File "/home/jdr2160/python-3.7_tpot-nn/lib/python3.7/site-packages/tpot/base.py", line 625, in fit
+    self._fit_init()
+  File "/home/jdr2160/python-3.7_tpot-nn/lib/python3.7/site-packages/tpot/base.py", line 526, in _fit_init
+    self._setup_pset()
+  File "/home/jdr2160/python-3.7_tpot-nn/lib/python3.7/site-packages/tpot/base.py", line 379, in _setup_pset
+    self._add_operators()
+  File "/home/jdr2160/python-3.7_tpot-nn/lib/python3.7/site-packages/tpot/base.py", line 437, in _add_operators
+    'template. Please check a step named {}'.format(step)
+ValueError: An error occured while attempting to read the specified template. Please check a step named MLPClassifier

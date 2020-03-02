@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "model_script.py", line 82, in <module>
+    clf_t.fit(X_train, y_train)
+  File "/home/jdr2160/python-3.7_tpot-nn/lib/python3.7/site-packages/tpot/base.py", line 625, in fit
+    self._fit_init()
+  File "/home/jdr2160/python-3.7_tpot-nn/lib/python3.7/site-packages/tpot/base.py", line 502, in _fit_init
+    self._setup_config(self.config_dict)
+  File "/home/jdr2160/python-3.7_tpot-nn/lib/python3.7/site-packages/tpot/base.py", line 337, in _setup_config
+    config = self._read_config_file(config_dict)
+  File "/home/jdr2160/python-3.7_tpot-nn/lib/python3.7/site-packages/tpot/base.py", line 368, in _read_config_file
+    '{}'.format(config_path)
+ValueError: Could not open specified TPOT operator config file: TPOT NN

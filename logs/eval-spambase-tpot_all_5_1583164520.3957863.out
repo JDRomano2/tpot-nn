@@ -1,0 +1,66 @@
+Sender: LSF System <jszostek@lambda25>
+Subject: Job 3816634: <eval-spambase-tpot_all_5_1583164520.3957863> in cluster <PMACS-SCC> Done
+
+Job <eval-spambase-tpot_all_5_1583164520.3957863> was submitted from host <sarlacc> by user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:20 2020
+Job was executed on host(s) <lambda25>, in queue <epistasis_normal>, as user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:38 2020
+</home/jdr2160> was used as the home directory.
+</home/jdr2160/tpot-nn> was used as the working directory.
+Started at Mon Mar  2 10:55:38 2020
+Terminated at Mon Mar  2 11:16:12 2020
+Results reported at Mon Mar  2 11:16:12 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J eval-spambase-tpot_all_5_1583164520.3957863
+#BSUB -o logs/eval-spambase-tpot_all_5_1583164520.3957863.out
+#BSUB -e logs/eval-spambase-tpot_all_5_1583164520.3957863.err
+#BSUB -M 10000
+
+python model_script.py --dataset=spambase --model_template=tpot_all
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   1233.10 sec.
+    Max Memory :                                 183 MB
+    Average Memory :                             125.03 MB
+    Total Requested Memory :                     4096.00 MB
+    Delta Memory :                               3913.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                7
+    Run time :                                   1234 sec.
+    Turnaround time :                            1252 sec.
+
+The output (if any) follows:
+
+>> TRAINING TPOT NN EVALUATION MODEL
+>> JOB START TIME:        1583164540.21
+>> DATASET:               spambase
+>> MODEL TEMPLATE:        tpot_all
+>> TEMPLATE STRING:       None
+>> BEGIN TRAINING AT:     1583164540.24
+Warning: xgboost.XGBClassifier is not available and will not be used by TPOT.
+Generation 1 - Current best internal CV score: 0.9548913043478262
+Generation 2 - Current best internal CV score: 0.9548913043478262
+Generation 3 - Current best internal CV score: 0.9548913043478262
+Generation 4 - Current best internal CV score: 0.9548913043478262
+Generation 5 - Current best internal CV score: 0.9548913043478262
+
+Best pipeline: GradientBoostingClassifier(input_matrix, learning_rate=0.5, max_depth=10, max_features=0.9500000000000001, min_samples_leaf=20, min_samples_split=6, n_estimators=100, subsample=1.0)
+>> END TRAINING AT:       1583165772.26
+>> TRAINING TIME ELAPSED: 1232.02
+>> ACCURACY SCORE:        0.9511400651465798
+>> PIPELINE SAVED TO:     pipelines/spambase-tpot_all-1583165772.py
+
+
+PS:
+
+Read file <logs/eval-spambase-tpot_all_5_1583164520.3957863.err> for stderr output of this job.
+

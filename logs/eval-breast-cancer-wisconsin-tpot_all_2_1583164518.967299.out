@@ -1,0 +1,66 @@
+Sender: LSF System <jszostek@lambda08>
+Subject: Job 3816601: <eval-breast-cancer-wisconsin-tpot_all_2_1583164518.967299> in cluster <PMACS-SCC> Done
+
+Job <eval-breast-cancer-wisconsin-tpot_all_2_1583164518.967299> was submitted from host <sarlacc> by user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:19 2020
+Job was executed on host(s) <lambda08>, in queue <epistasis_normal>, as user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:28 2020
+</home/jdr2160> was used as the home directory.
+</home/jdr2160/tpot-nn> was used as the working directory.
+Started at Mon Mar  2 10:55:28 2020
+Terminated at Mon Mar  2 10:57:31 2020
+Results reported at Mon Mar  2 10:57:31 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J eval-breast-cancer-wisconsin-tpot_all_2_1583164518.967299
+#BSUB -o logs/eval-breast-cancer-wisconsin-tpot_all_2_1583164518.967299.out
+#BSUB -e logs/eval-breast-cancer-wisconsin-tpot_all_2_1583164518.967299.err
+#BSUB -M 10000
+
+python model_script.py --dataset=breast-cancer-wisconsin --model_template=tpot_all
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   121.06 sec.
+    Max Memory :                                 96 MB
+    Average Memory :                             94.10 MB
+    Total Requested Memory :                     4096.00 MB
+    Delta Memory :                               4000.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                7
+    Run time :                                   123 sec.
+    Turnaround time :                            132 sec.
+
+The output (if any) follows:
+
+>> TRAINING TPOT NN EVALUATION MODEL
+>> JOB START TIME:        1583164530.12
+>> DATASET:               breast-cancer-wisconsin
+>> MODEL TEMPLATE:        tpot_all
+>> TEMPLATE STRING:       None
+>> BEGIN TRAINING AT:     1583164530.13
+Warning: xgboost.XGBClassifier is not available and will not be used by TPOT.
+Generation 1 - Current best internal CV score: 0.9626373626373625
+Generation 2 - Current best internal CV score: 0.9626373626373628
+Generation 3 - Current best internal CV score: 0.9648351648351647
+Generation 4 - Current best internal CV score: 0.9648351648351647
+Generation 5 - Current best internal CV score: 0.9692307692307693
+
+Best pipeline: GradientBoostingClassifier(MultinomialNB(input_matrix, alpha=0.001, fit_prior=True), learning_rate=0.1, max_depth=9, max_features=0.3, min_samples_leaf=16, min_samples_split=5, n_estimators=100, subsample=0.25)
+>> END TRAINING AT:       1583164650.95
+>> TRAINING TIME ELAPSED: 120.81
+>> ACCURACY SCORE:        0.9736842105263158
+>> PIPELINE SAVED TO:     pipelines/breast-cancer-wisconsin-tpot_all-1583164650.py
+
+
+PS:
+
+Read file <logs/eval-breast-cancer-wisconsin-tpot_all_2_1583164518.967299.err> for stderr output of this job.
+

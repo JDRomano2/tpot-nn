@@ -1,0 +1,66 @@
+Sender: LSF System <jszostek@lambda20>
+Subject: Job 3816563: <eval-Hill_Valley_with_noise-tpot_lr_4_1583164517.4040415> in cluster <PMACS-SCC> Done
+
+Job <eval-Hill_Valley_with_noise-tpot_lr_4_1583164517.4040415> was submitted from host <sarlacc> by user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:17 2020
+Job was executed on host(s) <lambda20>, in queue <epistasis_normal>, as user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:18 2020
+</home/jdr2160> was used as the home directory.
+</home/jdr2160/tpot-nn> was used as the working directory.
+Started at Mon Mar  2 10:55:18 2020
+Terminated at Mon Mar  2 11:20:14 2020
+Results reported at Mon Mar  2 11:20:14 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J eval-Hill_Valley_with_noise-tpot_lr_4_1583164517.4040415
+#BSUB -o logs/eval-Hill_Valley_with_noise-tpot_lr_4_1583164517.4040415.out
+#BSUB -e logs/eval-Hill_Valley_with_noise-tpot_lr_4_1583164517.4040415.err
+#BSUB -M 10000
+
+python model_script.py --dataset=Hill_Valley_with_noise --model_template=tpot_lr
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   1490.33 sec.
+    Max Memory :                                 135 MB
+    Average Memory :                             128.08 MB
+    Total Requested Memory :                     4096.00 MB
+    Delta Memory :                               3961.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                7
+    Run time :                                   1507 sec.
+    Turnaround time :                            1497 sec.
+
+The output (if any) follows:
+
+>> TRAINING TPOT NN EVALUATION MODEL
+>> JOB START TIME:        1583164523.49
+>> DATASET:               Hill_Valley_with_noise
+>> MODEL TEMPLATE:        tpot_lr
+>> TEMPLATE STRING:       Selector-Transformer-LogisticRegression
+>> BEGIN TRAINING AT:     1583164523.52
+Warning: xgboost.XGBClassifier is not available and will not be used by TPOT.
+Generation 1 - Current best internal CV score: 0.9710966294535549
+Generation 2 - Current best internal CV score: 0.9710966294535549
+Generation 3 - Current best internal CV score: 0.9710966294535549
+Generation 4 - Current best internal CV score: 0.9710966294535549
+Generation 5 - Current best internal CV score: 0.9710966294535549
+
+Best pipeline: LogisticRegression(Normalizer(VarianceThreshold(input_matrix, threshold=0.005), norm=max), C=20.0, dual=False, penalty=l2)
+>> END TRAINING AT:       1583166013.84
+>> TRAINING TIME ELAPSED: 1490.31
+>> ACCURACY SCORE:        0.9753086419753086
+>> PIPELINE SAVED TO:     pipelines/Hill_Valley_with_noise-tpot_lr-1583166013.py
+
+
+PS:
+
+Read file <logs/eval-Hill_Valley_with_noise-tpot_lr_4_1583164517.4040415.err> for stderr output of this job.
+

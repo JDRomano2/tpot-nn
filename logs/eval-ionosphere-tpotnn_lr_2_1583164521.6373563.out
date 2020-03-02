@@ -1,0 +1,54 @@
+Sender: LSF System <jszostek@lambda01>
+Subject: Job 3816666: <eval-ionosphere-tpotnn_lr_2_1583164521.6373563> in cluster <PMACS-SCC> Exited
+
+Job <eval-ionosphere-tpotnn_lr_2_1583164521.6373563> was submitted from host <sarlacc> by user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:21 2020
+Job was executed on host(s) <lambda01>, in queue <epistasis_normal>, as user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:48 2020
+</home/jdr2160> was used as the home directory.
+</home/jdr2160/tpot-nn> was used as the working directory.
+Started at Mon Mar  2 10:55:48 2020
+Terminated at Mon Mar  2 10:55:50 2020
+Results reported at Mon Mar  2 10:55:50 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J eval-ionosphere-tpotnn_lr_2_1583164521.6373563
+#BSUB -o logs/eval-ionosphere-tpotnn_lr_2_1583164521.6373563.out
+#BSUB -e logs/eval-ionosphere-tpotnn_lr_2_1583164521.6373563.err
+#BSUB -M 10000
+
+python model_script.py --dataset=ionosphere --model_template=tpotnn_lr
+
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   1.18 sec.
+    Max Memory :                                 81 MB
+    Average Memory :                             81.00 MB
+    Total Requested Memory :                     4096.00 MB
+    Delta Memory :                               4015.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                5
+    Run time :                                   5 sec.
+    Turnaround time :                            29 sec.
+
+The output (if any) follows:
+
+>> TRAINING TPOT NN EVALUATION MODEL
+>> JOB START TIME:        1583164550.12
+>> DATASET:               ionosphere
+>> MODEL TEMPLATE:        tpotnn_lr
+>> TEMPLATE STRING:       Selector-Transformer-tpot.builtins.PytorchLRClassifier
+>> BEGIN TRAINING AT:     1583164550.13
+
+
+PS:
+
+Read file <logs/eval-ionosphere-tpotnn_lr_2_1583164521.6373563.err> for stderr output of this job.
+

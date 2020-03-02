@@ -1,0 +1,66 @@
+Sender: LSF System <jszostek@lambda13>
+Subject: Job 3816663: <eval-ionosphere-tpot_all_4_1583164521.5246212> in cluster <PMACS-SCC> Done
+
+Job <eval-ionosphere-tpot_all_4_1583164521.5246212> was submitted from host <sarlacc> by user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:21 2020
+Job was executed on host(s) <lambda13>, in queue <epistasis_normal>, as user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:48 2020
+</home/jdr2160> was used as the home directory.
+</home/jdr2160/tpot-nn> was used as the working directory.
+Started at Mon Mar  2 10:55:48 2020
+Terminated at Mon Mar  2 10:58:10 2020
+Results reported at Mon Mar  2 10:58:10 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J eval-ionosphere-tpot_all_4_1583164521.5246212
+#BSUB -o logs/eval-ionosphere-tpot_all_4_1583164521.5246212.out
+#BSUB -e logs/eval-ionosphere-tpot_all_4_1583164521.5246212.err
+#BSUB -M 10000
+
+python model_script.py --dataset=ionosphere --model_template=tpot_all
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   141.60 sec.
+    Max Memory :                                 97 MB
+    Average Memory :                             95.40 MB
+    Total Requested Memory :                     4096.00 MB
+    Delta Memory :                               3999.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                7
+    Run time :                                   144 sec.
+    Turnaround time :                            169 sec.
+
+The output (if any) follows:
+
+>> TRAINING TPOT NN EVALUATION MODEL
+>> JOB START TIME:        1583164550.17
+>> DATASET:               ionosphere
+>> MODEL TEMPLATE:        tpot_all
+>> TEMPLATE STRING:       None
+>> BEGIN TRAINING AT:     1583164550.18
+Warning: xgboost.XGBClassifier is not available and will not be used by TPOT.
+Generation 1 - Current best internal CV score: 0.95
+Generation 2 - Current best internal CV score: 0.95
+Generation 3 - Current best internal CV score: 0.95
+Generation 4 - Current best internal CV score: 0.95
+Generation 5 - Current best internal CV score: 0.95
+
+Best pipeline: RandomForestClassifier(input_matrix, bootstrap=True, criterion=entropy, max_features=0.35000000000000003, min_samples_leaf=3, min_samples_split=18, n_estimators=100)
+>> END TRAINING AT:       1583164690.63
+>> TRAINING TIME ELAPSED: 140.45
+>> ACCURACY SCORE:        0.9014084507042254
+>> PIPELINE SAVED TO:     pipelines/ionosphere-tpot_all-1583164690.py
+
+
+PS:
+
+Read file <logs/eval-ionosphere-tpot_all_4_1583164521.5246212.err> for stderr output of this job.
+

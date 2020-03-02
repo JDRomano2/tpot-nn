@@ -1,0 +1,55 @@
+Sender: LSF System <jszostek@lambda20>
+Subject: Job 3816658: <eval-ionosphere-tpot_mlp_4_1583164521.326406> in cluster <PMACS-SCC> Exited
+
+Job <eval-ionosphere-tpot_mlp_4_1583164521.326406> was submitted from host <sarlacc> by user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:21 2020
+Job was executed on host(s) <lambda20>, in queue <epistasis_normal>, as user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:48 2020
+</home/jdr2160> was used as the home directory.
+</home/jdr2160/tpot-nn> was used as the working directory.
+Started at Mon Mar  2 10:55:48 2020
+Terminated at Mon Mar  2 10:55:49 2020
+Results reported at Mon Mar  2 10:55:49 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J eval-ionosphere-tpot_mlp_4_1583164521.326406
+#BSUB -o logs/eval-ionosphere-tpot_mlp_4_1583164521.326406.out
+#BSUB -e logs/eval-ionosphere-tpot_mlp_4_1583164521.326406.err
+#BSUB -M 10000
+
+python model_script.py --dataset=ionosphere --model_template=tpot_mlp
+
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   1.20 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     4096.00 MB
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              1
+    Max Threads :                                1
+    Run time :                                   4 sec.
+    Turnaround time :                            28 sec.
+
+The output (if any) follows:
+
+>> TRAINING TPOT NN EVALUATION MODEL
+>> JOB START TIME:        1583164549.72
+>> DATASET:               ionosphere
+>> MODEL TEMPLATE:        tpot_mlp
+>> TEMPLATE STRING:       Selector-Transformer-MLPClassifier
+>> BEGIN TRAINING AT:     1583164549.73
+Warning: xgboost.XGBClassifier is not available and will not be used by TPOT.
+
+
+PS:
+
+Read file <logs/eval-ionosphere-tpot_mlp_4_1583164521.326406.err> for stderr output of this job.
+

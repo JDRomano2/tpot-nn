@@ -1,0 +1,66 @@
+Sender: LSF System <jszostek@lambda02>
+Subject: Job 3816620: <eval-spambase-tpot_lr_1_1583164519.8379154> in cluster <PMACS-SCC> Done
+
+Job <eval-spambase-tpot_lr_1_1583164519.8379154> was submitted from host <sarlacc> by user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:19 2020
+Job was executed on host(s) <lambda02>, in queue <epistasis_normal>, as user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:33 2020
+</home/jdr2160> was used as the home directory.
+</home/jdr2160/tpot-nn> was used as the working directory.
+Started at Mon Mar  2 10:55:33 2020
+Terminated at Mon Mar  2 11:11:05 2020
+Results reported at Mon Mar  2 11:11:05 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J eval-spambase-tpot_lr_1_1583164519.8379154
+#BSUB -o logs/eval-spambase-tpot_lr_1_1583164519.8379154.out
+#BSUB -e logs/eval-spambase-tpot_lr_1_1583164519.8379154.err
+#BSUB -M 10000
+
+python model_script.py --dataset=spambase --model_template=tpot_lr
+
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   931.25 sec.
+    Max Memory :                                 122 MB
+    Average Memory :                             117.35 MB
+    Total Requested Memory :                     4096.00 MB
+    Delta Memory :                               3974.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                7
+    Run time :                                   935 sec.
+    Turnaround time :                            946 sec.
+
+The output (if any) follows:
+
+>> TRAINING TPOT NN EVALUATION MODEL
+>> JOB START TIME:        1583164534.55
+>> DATASET:               spambase
+>> MODEL TEMPLATE:        tpot_lr
+>> TEMPLATE STRING:       Selector-Transformer-LogisticRegression
+>> BEGIN TRAINING AT:     1583164534.59
+Warning: xgboost.XGBClassifier is not available and will not be used by TPOT.
+Generation 1 - Current best internal CV score: 0.9247282608695653
+Generation 2 - Current best internal CV score: 0.9247282608695653
+Generation 3 - Current best internal CV score: 0.925
+Generation 4 - Current best internal CV score: 0.9266304347826086
+Generation 5 - Current best internal CV score: 0.9266304347826086
+
+Best pipeline: LogisticRegression(RobustScaler(SelectFwe(input_matrix, alpha=0.045)), C=25.0, dual=False, penalty=l2)
+>> END TRAINING AT:       1583165464.66
+>> TRAINING TIME ELAPSED: 930.08
+>> ACCURACY SCORE:        0.9261672095548317
+>> PIPELINE SAVED TO:     pipelines/spambase-tpot_lr-1583165464.py
+
+
+PS:
+
+Read file <logs/eval-spambase-tpot_lr_1_1583164519.8379154.err> for stderr output of this job.
+

@@ -1,0 +1,54 @@
+Sender: LSF System <jszostek@lambda25>
+Subject: Job 3816649: <eval-spambase-tpotnn_all_5_1583164520.9833426> in cluster <PMACS-SCC> Exited
+
+Job <eval-spambase-tpotnn_all_5_1583164520.9833426> was submitted from host <sarlacc> by user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:21 2020
+Job was executed on host(s) <lambda25>, in queue <epistasis_normal>, as user <jdr2160> in cluster <PMACS-SCC> at Mon Mar  2 10:55:43 2020
+</home/jdr2160> was used as the home directory.
+</home/jdr2160/tpot-nn> was used as the working directory.
+Started at Mon Mar  2 10:55:43 2020
+Terminated at Mon Mar  2 10:55:45 2020
+Results reported at Mon Mar  2 10:55:45 2020
+
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+#!/bin/bash
+#BSUB -J eval-spambase-tpotnn_all_5_1583164520.9833426
+#BSUB -o logs/eval-spambase-tpotnn_all_5_1583164520.9833426.out
+#BSUB -e logs/eval-spambase-tpotnn_all_5_1583164520.9833426.err
+#BSUB -M 10000
+
+python model_script.py --dataset=spambase --model_template=tpotnn_all
+
+------------------------------------------------------------
+
+Exited with exit code 1.
+
+Resource usage summary:
+
+    CPU time :                                   1.16 sec.
+    Max Memory :                                 -
+    Average Memory :                             -
+    Total Requested Memory :                     4096.00 MB
+    Delta Memory :                               -
+    Max Swap :                                   -
+    Max Processes :                              -
+    Max Threads :                                -
+    Run time :                                   2 sec.
+    Turnaround time :                            24 sec.
+
+The output (if any) follows:
+
+>> TRAINING TPOT NN EVALUATION MODEL
+>> JOB START TIME:        1583164545.19
+>> DATASET:               spambase
+>> MODEL TEMPLATE:        tpotnn_all
+>> TEMPLATE STRING:       None
+>> BEGIN TRAINING AT:     1583164545.22
+
+
+PS:
+
+Read file <logs/eval-spambase-tpotnn_all_5_1583164520.9833426.err> for stderr output of this job.
+
