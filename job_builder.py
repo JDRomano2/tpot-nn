@@ -1,5 +1,6 @@
 import time
 import os, sys
+from pathlib import Path
 
 dsets = [
   'Hill_Valley_with_noise',
@@ -18,6 +19,11 @@ models = [
 ]
 
 jobname_template = 'eval-{0}-{1}_{2}_{3}'
+
+# Create directories if they don't already exist
+Path("./job_files").mkdir(parents=True, exist_ok=True)
+Path("./logs").mkdir(parents=True, exist_ok=True)
+Path("./pipelines").mkdir(parents=True, exist_ok=True)
 
 for dset in dsets:
   for model in models:
