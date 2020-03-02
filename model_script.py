@@ -3,8 +3,6 @@ import os
 import time
 import warnings
 
-import ipdb
-
 # We want clean output, without sklearn deprecation warnings
 warnings.filterwarnings("ignore")
 
@@ -70,8 +68,6 @@ print(">> TEMPLATE STRING:      ", template_str)
 X_train, X_test, y_train, y_test = train_test_split(
   X, y.astype(np.float64), train_size=0.8, test_size=0.2
 )
-
-#ipdb.set_trace()
 
 clf_t = tpot.TPOTClassifier(
   generations=5,
