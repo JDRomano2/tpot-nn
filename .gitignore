@@ -22,4 +22,5 @@ papers/
 .vscode/
 
 job_files/*
-#pipelines/*
+pipelines/*
+logs/*
