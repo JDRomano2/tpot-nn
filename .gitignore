@@ -24,3 +24,4 @@ papers/
 job_files/*
 pipelines/*
 logs/*
+pmlb_data_cache/*
