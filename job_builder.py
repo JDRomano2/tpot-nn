@@ -1,4 +1,5 @@
 import time
+import string
 import os, sys
 from pathlib import Path
 
@@ -15,7 +16,7 @@ dsets = [
 ]
 
 #jobname_template = 'eval-{0}-{1}_{2}_{3}'
-jobname_prefix = 'eval_tpotnn_'
+jobname_prefix = 'eval_tpotnn'
 
 # Create directories if they don't already exist
 Path("./job_files").mkdir(parents=True, exist_ok=True)
@@ -39,15 +40,16 @@ def make_jobfile(dataset, tpot_all, use_template, use_nn, use_classic, estimator
 
   use_nn_str = 'nn' if use_nn else 'no-nn'
   type_str = 'template' if use_template else 'config'
+  dset_str = dataset.lower().translate(str.maketrans('', '', string.punctuation))
 
   for rep in range(1, n_reps+1):
     if tpot_all:
-      jobname = "{0}_all_{1}_{2}_rep{3}_{4}".format(
-        jobname_prefix, use_nn_str, type_str, rep, int(time.time())
+      jobname = "{0}_all_{1}_{2}_{3}_rep{4}_{5}".format(
+        jobname_prefix, use_nn_str, type_str, dset_str, rep, int(time.time())
       )
     else:
-      jobname = "{0}_{1}_{2}_{3}_rep{4}_{5}".format(
-        jobname_prefix, estimator, use_nn_str, type_str, rep, int(time.time())
+      jobname = "{0}_{1}_{2}_{3}_{4}_rep{5}_{6}".format(
+        jobname_prefix, estimator, use_nn_str, type_str, dset_str, rep, int(time.time())
       )
 
     jobfile_path = 'job_files/{0}.sh'.format(jobname)

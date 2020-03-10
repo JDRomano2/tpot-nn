@@ -23,7 +23,7 @@ parser.add_argument(
     'breast-cancer-wisconsin',
     'car-evaluation',
     'glass',
-    'ionosphere'
+    'ionosphere',
     'spambase',
     'wine-quality-red',
     'wine-quality-white'
@@ -74,7 +74,7 @@ if tpot_all and estimator_select:
 
 print(">> TRAINING TPOT NN EVALUATION MODEL")
 print(">> JOB START TIME:        {0:.2f}".format(time.time()))
-print(">> DATASET:               {0}", args.dataset)
+print(">> DATASET:               {0}".format(args.dataset))
 print(">> USING CLASSIC TPOT:    {0}".format(args.use_classic))
 print(">> USING TPOT-NN:         {0}".format(args.use_nn))
 conf_type = 'template' if args.use_template else 'config_dict'
@@ -87,15 +87,16 @@ if conf_type == 'template':
     template_str = 'Selector-Transformer-Estimator'
   elif use_nn:
     if estimator_select == 'lr':
-      template_str = 'Selector-Transformer-tpot.builtins.PytorchLRClassifier'
+      template_str = 'Selector-Transformer-PytorchLRClassifier'
     elif estimator_select == 'mlp':
-      template_str = 'Selector-Transformer-tpot.builtins.PytorchMLPClassifier'
+      template_str = 'Selector-Transformer-PytorchMLPClassifier'
   else:
     if estimator_select == 'lr':
       template_str = 'Selector-Transformer-LogisticRegression'
     elif estimator_select == 'mlp':
-      template_str = 'Selector-Transformer-tpot.builtins.MLPClassifier'
+      template_str = 'Selector-Transformer-MLPClassifier'
 else:
+  template_str = None
   if tpot_all:
     if use_nn:
       config = config_nn
@@ -111,8 +112,8 @@ else:
       config_var_name += '_tpot'
     config = eval(config_var_name)
 
-
-print(">> TEMPLATE STRING:      ", template_str)
+if template_str:
+  print(">> TEMPLATE STRING:      ", template_str)
 
 X_train, X_test, y_train, y_test = train_test_split(
   X, y.astype(np.float64), train_size=0.8, test_size=0.2
@@ -125,6 +126,7 @@ if conf_type == 'template':
     generations=100,
     population_size=100,
     verbosity=2,
+    config_dict=config_nn,  # We can be permissive when template_str is set
     template=template_str
   )
 else:
