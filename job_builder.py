@@ -4,44 +4,79 @@ from pathlib import Path
 
 dsets = [
   'Hill_Valley_with_noise',
+  'Hill_Valley_without_noise',
   'breast-cancer-wisconsin',
-  'spambase',
+  'car-evaluation',
+  'glass',
   'ionosphere'
+  'spambase',
+  'wine-quality-red',
+  'wine-quality-white'
 ]
 
-models = [
-  'tpot_lr',
-  'tpot_mlp',
-  'tpot_all',
-  'tpotnn_lr',
-  'tpotnn_mlp',
-  'tpotnn_all'
-]
-
-jobname_template = 'eval-{0}-{1}_{2}_{3}'
+#jobname_template = 'eval-{0}-{1}_{2}_{3}'
+jobname_prefix = 'eval_tpotnn_'
 
 # Create directories if they don't already exist
 Path("./job_files").mkdir(parents=True, exist_ok=True)
 Path("./logs").mkdir(parents=True, exist_ok=True)
 Path("./pipelines").mkdir(parents=True, exist_ok=True)
+Path("./pmlb_data_cache").mkdir(parents=True, exist_ok=True)
+
+def make_jobfile(dataset, tpot_all, use_template, use_nn, use_classic, estimator, n_reps=5):
+  py_cmd = 'python model_script.py --dataset={0}'.format(dataset)
+  if use_nn:
+    py_cmd += ' --use_nn'
+  if use_template:
+    py_cmd += ' --use_template'
+  if tpot_all:
+    py_cmd += ' --tpot_all'
+  else:
+    # Set options that aren't compatible with '--tpot_all'
+    if use_classic:
+      py_cmd += ' --use_classic'
+    py_cmd += ' --estimator_select {0}'.format(estimator)
+
+  use_nn_str = 'nn' if use_nn else 'no-nn'
+  type_str = 'template' if use_template else 'config'
+
+  for rep in range(1, n_reps+1):
+    if tpot_all:
+      jobname = "{0}_all_{1}_{2}_rep{3}_{4}".format(
+        jobname_prefix, use_nn_str, type_str, rep, int(time.time())
+      )
+    else:
+      jobname = "{0}_{1}_{2}_{3}_rep{4}_{5}".format(
+        jobname_prefix, estimator, use_nn_str, type_str, rep, int(time.time())
+      )
+
+    jobfile_path = 'job_files/{0}.sh'.format(jobname)
+    jobfile = open(jobfile_path, 'w')
+    jobfile.writelines([
+      '#!/bin/bash\n',
+      '#BSUB -J {0}\n'.format(jobname),
+      '#BSUB -o logs/{0}.out\n'.format(jobname),
+      '#BSUB -e logs/{0}.err\n'.format(jobname),
+      '#BSUB -M 10000\n',
+      '\n',
+      '{0}\n'.format(py_cmd)
+    ])
+    jobfile.close()
+
+    #os.system('bsub < ' + jobfile_path)
 
 for dset in dsets:
-  for model in models:
-    py_cmd = 'python model_script.py --dataset={0} --model_template={1}'.format(dset, model)
-    for rep in range(1,6):  # 5 reps for each dset/model combo
-      jobname = jobname_template.format(dset, model, rep, str(time.time()))
+  for nn in [True, False]:
+    for classic_tpot in [True, False]:
+      for model in ['lr', 'mlp']:
+        # Allow stacking
+        make_jobfile(dataset=dset, tpot_all=False, use_template=False,
+                     use_nn=nn, use_classic=classic_tpot, estimator=model)
 
-      jobfile_path = 'job_files/{0}.sh'.format(jobname)
-      jobfile = open(jobfile_path, 'w')
-      jobfile.writelines([
-        '#!/bin/bash\n',
-        '#BSUB -J {0}\n'.format(jobname),
-        '#BSUB -o logs/{0}.out\n'.format(jobname),
-        '#BSUB -e logs/{0}.err\n'.format(jobname),
-        '#BSUB -M 10000\n',
-        '\n',
-        '{0}\n'.format(py_cmd)
-      ])
-      jobfile.close()
+        # Don't allow stacking
+        make_jobfile(dataset=dset, tpot_all=False, use_template=True,
+                     use_nn=nn, use_classic=classic_tpot, estimator=model)
 
-      os.system('bsub < ' + jobfile_path)
+    # See what TPOT does if we give it access to every estimator
+    make_jobfile(dataset=dset, tpot_all=True, use_template=False,
+                 use_nn=nn, use_classic=classic_tpot, estimator=model)
