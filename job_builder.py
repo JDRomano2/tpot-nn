@@ -65,7 +65,7 @@ def make_jobfile(dataset, tpot_all, use_template, use_nn, use_classic, estimator
     ])
     jobfile.close()
 
-    #os.system('bsub < ' + jobfile_path)
+    os.system('bsub < ' + jobfile_path)
 
 for dset in dsets:
   for nn in [True, False]:
