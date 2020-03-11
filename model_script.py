@@ -3,6 +3,8 @@ import os
 import time
 import warnings
 
+import ipdb
+
 # We want clean output, without sklearn deprecation warnings
 warnings.filterwarnings("ignore")
 
@@ -31,14 +33,8 @@ parser.add_argument(
   help='PMLB dataset name'
 )
 parser.add_argument(
-  '--tpot_all',
-  help='Run TPOT using all selectors, transformers, and estimators (can be combined with \'--use_nn\').',
-  action='store_true'
-)
-parser.add_argument(
   '--use_template',
   help='Train TPOT using a template string (if False, run TPOT from config dict instead',
-  action='store_true'
 )
 parser.add_argument(
   '--use_nn',
@@ -46,41 +42,43 @@ parser.add_argument(
   action='store_true'
 )
 parser.add_argument(
-  '--use_classic',
-  help='Include \'classic\' TPOT estimators',
-  action='store_true'
-)
-parser.add_argument(
   '--estimator_select',
   choices=[
     'lr',
-    'mlp'
+    'mlp',
+    'all'
   ],
   help='Choose estimator architecture (lr or mlp). If not specified, all estimators are used.'
+)
+parser.add_argument(
+  '--jobname',
+  help='Name of the LFS job (for setting the pipeline file\'s name).'
+)
+parser.add_argument(
+  '--solo',
+  help='Run ONLY the estimator (don\'t use with --estimator_select all)',
+  action='store_true'
 )
 
 args = parser.parse_args()
 
 dataset = args.dataset
-tpot_all = args.tpot_all
-use_nn = args.use_nn
-use_classic = args.use_classic
 estimator_select = args.estimator_select
-
-if tpot_all and use_classic:
-  raise RuntimeError("Cannot use 'tpot_all' and 'use_classic' simultaneously")
-if tpot_all and estimator_select:
-  raise RuntimeError("Cannot use 'tpot_all' and set 'estimator_select' simultaneously")
+# tpot_all = args.tpot_all
+tpot_all = True if estimator_select == 'all' else False
+use_nn = args.use_nn
 
 print(">> TRAINING TPOT NN EVALUATION MODEL")
 print(">> JOB START TIME:        {0:.2f}".format(time.time()))
 print(">> DATASET:               {0}".format(args.dataset))
-print(">> USING CLASSIC TPOT:    {0}".format(args.use_classic))
+print(">> USING SOLO ESTIMATOR:  {0}".format(args.solo))
 print(">> USING TPOT-NN:         {0}".format(args.use_nn))
 conf_type = 'template' if args.use_template else 'config_dict'
 print(">> CONFIGURATION TYPE:    {0}".format(conf_type))
 
 X, y = fetch_data(args.dataset, return_X_y=True, local_cache_dir="pmlb_data_cache/")
+
+template_str = None
 
 if conf_type == 'template':
   if tpot_all:
@@ -96,7 +94,6 @@ if conf_type == 'template':
     elif estimator_select == 'mlp':
       template_str = 'Selector-Transformer-MLPClassifier'
 else:
-  template_str = None
   if tpot_all:
     if use_nn:
       config = config_nn
@@ -108,9 +105,10 @@ else:
     config_var_name += estimator_select
     config_var_name += '_'
     config_var_name += 'nn' if use_nn else 'sk'
-    if use_classic:
+    if (not args.solo):
       config_var_name += '_tpot'
     config = eval(config_var_name)
+    print(">> CONFIG DICT NAME:     ", config_var_name)
 
 if template_str:
   print(">> TEMPLATE STRING:      ", template_str)
@@ -148,12 +146,10 @@ print(">> TRAINING TIME ELAPSED: {0:.2f}".format(end_t - start_t))
 
 print(">> ACCURACY SCORE:       ", clf_t.score(X_test, y_test))
 
-pipeline_fname = os.path.join(
-  'pipelines', 
-  '{0}-{1}-{2}.py'.format(
-    args.dataset, args.model_template, int(time.time())
-  )
-)
+estimator = estimator_select
+use_nn_str = 'nn' if use_nn else 'no-nn'
+
+pipeline_fname = os.path.join('pipelines', '{0}.py'.format(args.jobname))
 clf_t.export(pipeline_fname)
 
 print(">> PIPELINE SAVED TO:    ", pipeline_fname)
