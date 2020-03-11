@@ -52,6 +52,7 @@ def make_jobfile(dataset, use_template, use_nn, estimator, solo, n_reps=5):
     jobfile.writelines([
       '#!/bin/bash\n',
       '#BSUB -J {0}\n'.format(jobname),
+      '#BSUB -q "epistasis_long"'
       '#BSUB -o logs/{0}.out\n'.format(jobname),
       '#BSUB -e logs/{0}.err\n'.format(jobname),
       '#BSUB -M 10000\n',
