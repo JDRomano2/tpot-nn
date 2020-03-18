@@ -33,6 +33,7 @@ parser.add_argument(
 parser.add_argument(
   '--use_template',
   help='Train TPOT using a template string (if False, run TPOT from config dict instead',
+  action='store_true'
 )
 parser.add_argument(
   '--use_nn',
