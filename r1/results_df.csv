@@ -1,0 +1,4 @@
+conf_type,dset,rep,time_submit,log_file,start_train,end_train,train_duration,accuracy,pipeline_file
+config-tpot-base,mushroom,02,1603851187,tpot-nn_config-tpot-base_mushroom_02_1603851187.out,1.61,9094.91,9093.3,1.0,pipelines/tpot-nn_config-tpot-base_mushroom_02_1603851187.py
+config-tpot-base,mushroom,02,1603851187,tpot-nn_config-tpot-base_mushroom_02_1603851187.out,1.89,,,,
+config-tpot-base,mushroom,02,1603851187,tpot-nn_config-tpot-base_mushroom_02_1603851187.out,1.56,312698.89,312697.34,0.9554831704668838,pipelines/tpot-nn_config-tpot-nn-shallow_spambase_07_1603851197.py

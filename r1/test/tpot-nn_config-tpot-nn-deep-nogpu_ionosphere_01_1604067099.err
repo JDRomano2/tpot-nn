@@ -1,0 +1,1 @@
+/home/jdr2160/.lsbatch/1604067099.7282581.shell: line 8: 12797 Killed                  python run_one.py --dataset=ionosphere --config_dict=config_tpot_nn_deep --jobname tpot-nn_config-tpot-nn-deep-nogpu_ionosphere_01_1604067099
